@@ -17,13 +17,19 @@ const Header = () => {
                 </ul>
                 <ul className='header-list-element header-link-icons'>
                     <li>
-                        <img src={githubLogo} className='link-icons' alt='GitHub'></img>
+                        <a href='https://github.com/scartisp' target="_blank" rel="noreferrer">
+                            <img src={githubLogo} className='link-icons' alt='GitHub'></img>
+                        </a>
                     </li>
                     <li>
-                        <img src={liLogo} className='link-icons' alt='LinkedIn'></img>
+                        <a href='https://www.linkedin.com/in/simioncartis' target="_blank" rel="noreferrer">
+                            <img src={liLogo} className='link-icons' alt='LinkedIn'></img>
+                        </a>
                     </li>
                     <li>
-                        <img src={downloadIcon} className='link-icons' alt='Download Resume'></img>
+                        <a href='/resume.pdf' download='Simion-Cartis-Resume.pdf'>
+                            <img src={downloadIcon} className='link-icons' alt='Download Resume'></img>
+                        </a>
                     </li>
                 </ul>
             </nav>

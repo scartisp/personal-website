@@ -8,10 +8,11 @@
 
 :root {
   --header-size: 88px;
-  --font-title: 'Handjet', system-ui, sans-serif;
+  --Handjet: 'Handjet', system-ui, sans-serif;
   --title-size: 2.75rem;
-  --font-sub-title: 'Mozilla Text', system-ui, sans-serif;
+  --Mozilla: 'Mozilla Text', system-ui, sans-serif;
   --sub-title-size: 1.25rem;
+  --home-name-size: 15rem;
   
   --bg: #ffffff;
   --text: #1a1a1a;

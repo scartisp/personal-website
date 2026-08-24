@@ -1,0 +1,32 @@
+.home {
+  position: fixed;
+  inset-inline: 0;
+  max-width: 1200px;
+  margin-inline: auto;
+  /* padding-inline: 2rem; */
+  padding-top: 5rem
+}
+
+.name-div {
+  display: flex;
+}
+
+.home-name {
+  font-family: var(--Handjet);
+  font-size: var(--home-name-size);
+  margin: 0;
+}
+
+.last-name {
+  color: #73000A;
+}
+
+.sub-name-content {
+  font-family: var(--Mozilla);
+  max-width: 500px;
+}
+
+.adjectives {
+  margin: 0;
+  font-size: 2rem;
+}

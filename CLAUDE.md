@@ -15,8 +15,8 @@ scratch. Visual design is the weakest area and the one they most want to grow in
   write the real code.
 - Only edit files when the owner explicitly asks for an implementation, or when they're stuck after
   trying. If you do write code, explain *why* it's shaped that way, not just what it does.
-- Name the React concept behind each answer (props vs. state, derived state, keys, `useEffect`
-  dependencies, context, default vs. named exports...) so the vocabulary sticks.
+- Name the React or CSS concept behind each answer (props vs. state, derived state, keys, `useEffect`
+  dependencies, normal flow vs. out-of-flow, main axis vs. cross axis) so the vocabulary sticks.
 - For "how do I make this look good": give concrete, checkable rules (spacing scale, type scale,
   contrast, alignment, limited palette) rather than dumping finished CSS. Point at what's wrong in
   what they built and why the eye reads it that way.
@@ -28,10 +28,10 @@ scratch. Visual design is the weakest area and the one they most want to grow in
   only when they ask a genuinely deep question or say "explain in detail". Cut preamble, restatements
   of the question, and recaps of things already covered in the conversation. One good example beats three.
 - **Correct a wrong premise before answering the question built on it.** The owner is learning, and an
-  answer that plays along with a misunderstanding teaches the misunderstanding. Read the code before
-  agreeing that it does what they think it does — including code in repos they link to for reference.
-  Fetch and read linked repos rather than guessing from their description; guessing has produced wrong
-  answers here before.
+  answer that plays along with a misunderstanding teaches the misunderstanding. Read the CSS before
+  agreeing that a rule does what they think it does — several questions here have been built on a
+  property that is silently doing nothing. Fetch and read linked repos rather than guessing from their
+  description; guessing has produced wrong answers here before.
 
 ## Commands
 
@@ -60,70 +60,97 @@ honestly (TS catches the default-vs-named import mismatch class of bug that JS s
 **Gotcha that follows from this:** Vite only transforms JSX inside `.jsx` files, **not** `.js`. A
 component saved as `.js` fails with a confusing parse error. Component files must be `.jsx`.
 
-## Current state (verify before trusting — this section goes stale fastest)
-
-Four commits; the site is barely started. Re-read `src/App.jsx` and run `git log --oneline` before
-relying on any of the following.
-
-`src/App.jsx` currently renders only `<Header />`. **`react-router-dom` (v7) is installed but its
-import in `App.jsx` is commented out**, so it is presently an unused dependency — the owner was
-studying routing, not committing to it. A router is only warranted once the site has a second real
-URL; navigating between sections of one page is plain `<a href="#id">` plus `scroll-behavior: smooth`,
-with no library involved. Don't wire the router back up unsolicited.
-
-`src/Header/Header.jsx` is a near-empty `<nav>` and establishes the emerging convention:
-**one folder per component, `ComponentName/ComponentName.jsx`, default-exported.** The older flat
-`src/Header.jsx` was moved here; expect other components to follow the folder pattern.
-
-Leftovers from the scaffold, all placeholder to be replaced rather than patterns to imitate:
-- `src/App.css` — styles `#center`, `#next-steps`, `#docs`, `#spacer`, `.hero`, `.ticks`, `.counter`,
-  none of which render any more. Its import in `App.jsx` is commented out. Safe to delete.
-- `src/assets/react.svg`, `src/assets/vite.svg`, `public/icons.svg`, `public/favicon.svg` — scaffold
-  artwork. `src/assets/hero.png` is the owner's own addition.
-- `README.md` — still the scaffold default, and now actively wrong: it's titled "React + TypeScript +
-  Vite" for a project with no TypeScript. Worth replacing once the site takes shape.
-
-`index.html` has the owner's personal notes in a trailing HTML comment. **Don't delete it** — the
-four-step plan (collect references → clear the scaffold → real content unstyled → style one decision
-at a time) is their roadmap and the best statement of intent available. Note the first line of that
-comment recommends `npx tsc -b --watch`, which no longer applies now that TypeScript is gone.
-
 ## Architecture
 
 Render chain: `index.html` (the only HTML file; Vite's build entry) loads `/src/main.jsx`, which mounts
 `<App />` into `#root` inside `<StrictMode>`. StrictMode double-invokes render and effects in dev only —
 expect duplicated logs; that's a feature that exposes impure renders, not a bug to work around.
 
+`src/App.jsx` composes the page as a flat list of section components — currently `<Header />` and
+`<Home />`. **`react-router-dom` (v7) is installed but its import in `App.jsx` is commented out**, so it
+is presently an unused dependency — the owner was studying routing, not committing to it. A router is
+only warranted once the site has a second real URL; navigating between sections of one page is plain
+`<a href="#id">` plus `scroll-behavior: smooth`, with no library involved. Don't wire the router back
+up unsolicited.
+
+**Component convention: one folder per component, `ComponentName/ComponentName.jsx`, default-exported,
+with a lowercase `componentname.css` beside it** that the component imports. Note the casing split —
+the `.jsx` is PascalCase, the `.css` is lowercase. Follow it for new components.
+
 Two asset paths, and they behave differently:
 - `src/assets/*` — `import` it, Vite hashes and inlines/bundles it, broken references fail the build.
-- `public/*` — referenced by absolute URL (`/icons.svg`), copied verbatim, **never checked**. Useful for
-  `favicon.svg` and SVG sprites used via `<use href="/icons.svg#id">`; a typo here fails silently at runtime.
+  Currently the three header icons (`github-logo.png`, `li-logo.png`, `download-icon.png`).
+- `public/*` — referenced by absolute URL, copied verbatim, **never checked**. A typo here fails
+  silently at runtime. `public/resume.pdf` is load-bearing: `Header.jsx` links to it with
+  `<a href="/resume.pdf" download>`. `favicon.svg` and `icons.svg` are scaffold leftovers.
+
+Fonts are Google Fonts (Handjet, Mozilla Text) loaded by `<link>` in `index.html` and exposed as the
+`--Handjet` / `--Mozilla` tokens. Those tokens are named after the *typeface*, not its role, so
+changing the display font means editing every rule that references it — worth mentioning if the owner
+hits that pain, but it's their call.
+
+### The fixed-header offset system
+
+The one mechanism that spans files. `--header-size: 88px` is defined in `index.css` and consumed in
+three places that must stay in sync:
+
+- `header.css` — `.site-header { position: fixed; height: var(--header-size) }`
+- `index.css` — `body { padding-top: var(--header-size) }` reserves the space the fixed header vacated
+- `index.css` — `html { scroll-padding-top: var(--header-size) }` stops the header from covering a
+  section heading when an `#id` anchor jumps to it
+
+Change the header's height only through that token.
+
+**The recurring bug in this repo:** copying `position: fixed; inset-inline: 0` out of `header.css` into
+a content component. The header *should* be fixed; content should not. A fixed element is out of
+normal flow and contributes zero height to the document, which makes the page unscrollable and the
+section invisible to everything below it. `.home` in `src/Home/home.css` has this right now. Check for
+it before debugging any "my layout is wrong / the page won't scroll" question.
 
 ### Styling
 
 Plain CSS — no preprocessor, no CSS-in-JS, no utility framework. Two layers:
 
-- `src/index.css` — the global layer: design tokens as CSS custom properties on `:root` (`--text`,
-  `--bg`, `--accent`, `--border`, `--sans`, `--shadow`...), base typography, and a
-  `@media (prefers-color-scheme: dark)` block that **only redefines those tokens**.
+- `src/index.css` — the global layer: a `*, *::before, *::after { box-sizing: border-box }` reset,
+  design tokens as CSS custom properties on `:root` (sizing: `--header-size`, `--title-size`,
+  `--sub-title-size`, `--home-name-size`; fonts: `--Handjet`, `--Mozilla`; color: `--bg`, `--text`,
+  `--border`, `--accent`), and base `html`/`body` rules.
 - Per-component CSS colocated in the component's folder, imported by that component.
-
-**Dark mode works only because nothing hard-codes a color.** A new color belongs in the token block,
-not inline in a rule. Break that discipline once and dark mode quietly rots — this is the single most
-important styling constraint in the repo.
 
 **A colocated CSS import is organization, not isolation.** CSS imports are global no matter where they
 appear; Vite concatenates them into one stylesheet, so class names share a single namespace app-wide.
-Prefix class names by component (`.header-title`) to avoid collisions. CSS Modules (`*.module.css`) is
-the escape hatch, but only once the owner has actually felt the collision problem.
+Prefix class names by component (`.header-nav`, `.home-name`) to avoid collisions. CSS Modules
+(`*.module.css`) is the escape hatch, but only once the owner has actually felt the collision problem.
 
-`index.css` also carries scaffold layout decisions that will bite once real content lands: `#root` is
-pinned to `width: 1126px` with `text-align: center` and a `border-inline`. Centering everything is a
-demo-page choice, not a site-wide one.
+Dark mode: the `@media (prefers-color-scheme: dark)` block in `index.css` exists but is **entirely
+commented out**, with a TODO noting the PNG icons need dark variants. Two things already work against
+turning it back on — `--accent:` is declared empty (an invalid value), and `home.css` hard-codes
+`#73000A` for `.last-name`. If the owner wants dark mode back, the fix is to make every color a token
+first; a new color belongs in the token block, not inline in a rule.
 
-The CSS uses **native nesting** (`&:hover`, nested selectors) — a browser feature, not Sass. The
-responsive strategy is a single `@media (max-width: 1024px)` breakpoint nested inside each rule rather
-than collected at the bottom of the file.
+The `#73000A` dark red is currently the site's only accent color and it's the natural candidate for
+`--accent`.
+
+## Known dead code
+
+- `src/App.css` — pure scaffold. Styles `#center`, `#next-steps`, `#docs`, `#spacer`, `.hero`,
+  `.ticks`, `.counter`, none of which render any more. Its import in `App.jsx` is commented out. This
+  is also the only file using native CSS nesting and the `@media (max-width: 1024px)` breakpoint, so
+  don't cite it as evidence of the project's conventions — the owner's own CSS has no media queries
+  yet, meaning **the site is currently not responsive at all**. Safe to delete.
+- `README.md` — still the scaffold default, titled "React + TypeScript + Vite" for a project with no
+  TypeScript. Worth replacing once the site takes shape.
+- `public/favicon.svg`, `public/icons.svg` — scaffold artwork.
+
+## Roadmap
+
+`index.html` has the owner's personal notes in a trailing HTML comment. **Don't delete it** — the
+four-step plan (collect references → clear the scaffold → real content unstyled → style one decision
+at a time) is their roadmap and the best statement of intent available. Note the first line of that
+comment recommends `npx tsc -b --watch`, which no longer applies now that TypeScript is gone.
+
+Work happens on topic branches (`header`, `about-section`) merged toward `main`; `origin` has `main`
+and `header`. The current branch name is usually the best signal of what section is being built.
 
 ## Lint
 

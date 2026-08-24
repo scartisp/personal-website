@@ -1,10 +1,10 @@
 .home {
-  position: fixed;
+  /* position: fixed; */
   inset-inline: 0;
   max-width: 1200px;
   margin-inline: auto;
   /* padding-inline: 2rem; */
-  padding-top: 5rem
+  padding-top: 2rem
 }
 
 .name-div {
@@ -14,6 +14,7 @@
 .home-name {
   font-family: var(--Handjet);
   font-size: var(--home-name-size);
+  font-weight: 500;
   margin: 0;
 }
 

@@ -12,12 +12,11 @@
   --title-size: 2.75rem;
   --Mozilla: 'Mozilla Text', system-ui, sans-serif;
   --sub-title-size: 1.25rem;
-  --home-name-size: 15rem;
   
   --bg: #ffffff;
   --text: #1a1a1a;
   --border: #e5e5e5;
-  --accent: ;
+  --accent: #73000A;
 }
 
 @media (prefers-color-scheme: dark) {

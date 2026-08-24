@@ -1,0 +1,28 @@
+
+.about {
+  max-width: 1200px;
+  margin-inline: auto;
+  font-family: var(--Mozilla);
+  padding-bottom: 4rem;
+}
+
+.about-title {
+  font-family: var(--Handjet);
+  font-weight: 500;
+  text-align: center;
+  font-size: 10rem;
+  margin-bottom: 0;
+}
+
+.about-content {
+  display: flex;
+  justify-content: space-between;
+}
+.about-text {
+  display: block;
+  font-size: 1.25rem;
+  width: 500px;
+}
+.code-img {
+  height: 300px;
+}

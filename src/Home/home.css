@@ -1,10 +1,18 @@
 .home {
+  --grid-line: color-mix(in srgb, var(--border) 30%, var(--bg));
+  background-image:
+    repeating-linear-gradient(to right,  var(--grid-line) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(to bottom, var(--grid-line) 0 1px, transparent 1px 80px);
+}
+
+.home-inner {
   /* position: fixed; */
-  inset-inline: 0;
+  /* inset-inline: 0; */
   max-width: 1200px;
   margin-inline: auto;
   /* padding-inline: 2rem; */
-  padding-top: 2rem
+  padding-top: 2rem;
+  padding-bottom: 40rem;
 }
 
 .name-div {
@@ -13,21 +21,26 @@
 
 .home-name {
   font-family: var(--Handjet);
-  font-size: var(--home-name-size);
+  font-size: 15rem;
   font-weight: 500;
   margin: 0;
 }
 
 .last-name {
-  color: #73000A;
+  color: var(--accent);
 }
 
 .sub-name-content {
   font-family: var(--Mozilla);
-  max-width: 500px;
+  max-width: 1100px;
 }
 
 .adjectives {
   margin: 0;
+  font-size: 4.5rem;
+}
+
+.blurb {
+  max-width: 800px;
   font-size: 2rem;
 }

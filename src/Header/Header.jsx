@@ -8,8 +8,9 @@ const Header = () => {
     return (
         <header>
             <nav className='site-header'>
-                <a href='/' className="logo a-link">Simion Cartis</a>
+                <a href='#home' className="logo a-link">Simion Cartis</a>
                 <ul className='header-list-element header-nav'>
+                    <li> <a href='#about' className='a-link'>About</a></li>
                     <li>Skills</li>
                     <li>Experience</li>
                     <li>Portfolio</li>

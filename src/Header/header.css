@@ -10,6 +10,7 @@
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   border-bottom: 1px solid var(--border);
+background-color: color-mix(in srgb, var(--bg) 80%, transparent);
 }
 
 .site-header a {
@@ -49,6 +50,6 @@
 }
 
 .a-link:hover {
-  text-decoration: underline;
+  color: var(--accent);
   /* TODO this code be smoother */
 }

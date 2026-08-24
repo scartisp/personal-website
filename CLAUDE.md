@@ -42,6 +42,8 @@ npm run lint     # eslint . — the ONLY static check in this project
 npm run preview  # serve the built dist/ locally, to sanity-check a production build
 ```
 
+`npm run lint` is currently clean — treat any output as a regression you introduced.
+
 **There is no typecheck and no test runner.** `npm run build` does not validate anything beyond what
 Vite needs to bundle, so `npm run lint` is the entire safety net — run it after non-trivial edits.
 There is no `npm test`; adding Vitest is a deliberate decision to discuss with the owner first.
@@ -61,6 +63,9 @@ honestly (TS catches the default-vs-named import mismatch class of bug that JS s
 component saved as `.js` fails with a confusing parse error. Component files must be `.jsx`.
 
 ## Architecture
+
+Stack: React 19 + Vite 8 + ESLint 10 (flat config). React 19 means the automatic JSX transform — no
+`import React` in component files; don't add one.
 
 Render chain: `index.html` (the only HTML file; Vite's build entry) loads `/src/main.jsx`, which mounts
 `<App />` into `#root` inside `<StrictMode>`. StrictMode double-invokes render and effects in dev only —
@@ -104,8 +109,29 @@ Change the header's height only through that token.
 **The recurring bug in this repo:** copying `position: fixed; inset-inline: 0` out of `header.css` into
 a content component. The header *should* be fixed; content should not. A fixed element is out of
 normal flow and contributes zero height to the document, which makes the page unscrollable and the
-section invisible to everything below it. `.home` in `src/Home/home.css` has this right now. Check for
-it before debugging any "my layout is wrong / the page won't scroll" question.
+section invisible to everything below it. It was in `.home`; `src/Home/home.css` now has both
+`position: fixed` and `padding-inline` commented out, and the leftover `inset-inline: 0` is inert on a
+static element (insets only apply to positioned boxes) — harmless, but it is not doing what it looks
+like it is doing. Check for a stray `position: fixed` before debugging any "my layout is wrong / the
+page won't scroll" question.
+
+### The page container is duplicated, not shared
+
+The second cross-file mechanism, and it is currently out of sync. Both `.site-header` and `.home`
+declare their own `max-width: 1200px; margin-inline: auto`, but only the header keeps
+`padding-inline: 2rem` — `.home`'s is commented out. So the home text starts 2rem to the left of the
+logo above it; the two columns do not share an edge. The standard fix is one container rule (a
+`.container` class or a shared token like `--page-max: 1200px` / `--page-pad: 2rem`) that every
+section reuses, rather than each component restating the numbers. Worth raising when the owner adds a
+third section and copies the pair of declarations a third time.
+
+### Anchor navigation is not wired up yet
+
+`html { scroll-padding-top }` and `scroll-behavior: smooth` are in place, but nothing uses them: the
+four nav items in `Header.jsx` are bare `<li>` text with no `<a href="#id">`, and no section renders
+an `id`. The logo is `<a href="/">`, a full page reload rather than a scroll to top (there is a TODO
+on it). Expect the offset system to be untested in practice — verify it the first time a real anchor
+is added.
 
 ### Styling
 
@@ -149,8 +175,8 @@ four-step plan (collect references → clear the scaffold → real content unsty
 at a time) is their roadmap and the best statement of intent available. Note the first line of that
 comment recommends `npx tsc -b --watch`, which no longer applies now that TypeScript is gone.
 
-Work happens on topic branches (`header`, `about-section`) merged toward `main`; `origin` has `main`
-and `header`. The current branch name is usually the best signal of what section is being built.
+Work happens on topic branches (`header`, `about-section`) merged toward `main`; `origin` has `main`,
+`header`, and `about-section`. The current branch name is usually the best signal of what section is being built.
 
 ## Lint
 

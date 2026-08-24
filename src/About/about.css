@@ -19,10 +19,13 @@
   justify-content: space-between;
 }
 .about-text {
+  margin: 0;
+  padding: 0;
   display: block;
   font-size: 1.25rem;
   width: 500px;
 }
 .code-img {
+  margin-top: 20px;
   height: 300px;
 }

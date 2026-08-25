@@ -4,6 +4,7 @@
 import Header from './Header/Header'
 import Home from './Home/Home'
 import About from './About/About'
+import Skills from './Skills/Skills'
 // import './App.css'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <main>
         <Home />
         <About />
+        <Skills />
       </main>
     </>
 

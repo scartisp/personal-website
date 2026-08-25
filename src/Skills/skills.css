@@ -1,0 +1,19 @@
+.skills {
+  max-width: 1200px;
+  margin-inline: auto;
+  font-family: var(--Mozilla);
+  padding-bottom: 4rem;
+}
+
+.skills-pill-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+.skill-pill {
+  border: black solid 1px;
+  border-radius: 12px;
+  padding: 1rem;
+
+}

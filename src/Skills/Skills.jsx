@@ -22,7 +22,7 @@ const Skills = () => {
         'Unit testing'
     ];
     return (
-        <div id='skills' className='section-div'>
+        <div id='skills' className='section-div skills-div'>
             <h2 className='section-titles'>SKILLS</h2>
             <div className='skills-pill-div'>
                 {skills.map((skill, index) => (

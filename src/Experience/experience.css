@@ -1,0 +1,47 @@
+.work-experience-div {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 0 auto;
+}
+
+.experience-card {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #eaeaea;
+  border-radius: 20px;
+  padding: 2rem;
+  gap: 2.5rem;
+  transition: all 0.3s ease;
+}
+
+.meta-div {
+  flex: 0 0 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border-right: 1px solid #eaeaea;
+  padding-right: 2.5rem;
+}
+
+.meta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.meta-label {
+  margin-bottom: .25rem;
+}
+
+.experience-title {
+  margin: .25rem 0 ;
+}
+
+.experience-company {
+  margin: .75rem 0 .25rem ;
+}
+
+.work-description {
+  font-family: var(--Mozilla);
+}

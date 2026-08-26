@@ -11,7 +11,7 @@ const Header = () => {
                 <ul className='header-list-element header-nav'>
                     <li> <a href='#about' className='a-link'>About</a></li>
                     <li> <a href='#skills' className='a-link'> Skills </a></li>
-                    <li>Experience</li>
+                    <li> <a href='#experience' className='a-link'>Experience</a></li>
                     <li>Portfolio</li>
                     <li>Contact</li>
                 </ul>

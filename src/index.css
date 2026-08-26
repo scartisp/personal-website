@@ -14,6 +14,7 @@
   --sub-title-size: 1.25rem;
   
   --bg: #ffffff;
+  --alt-bg: #FAFAFA;
   --text: #1a1a1a;
   --border: #e5e5e5;
   --accent: #73000A;
@@ -43,6 +44,14 @@
   margin-bottom: 0;
 }
 
+.section-subtitles {
+  font-family: var(--Handjet);
+  font-weight: 500;
+  font-size: 5rem;
+  margin-bottom: 0;
+  margin: 1.5rem 0 1rem;
+}
+
 html {
   scroll-padding-top: var(--header-size);
   scroll-behavior: smooth;
@@ -54,4 +63,16 @@ body {
 
   background: var(--bg);
   color: var(--text);
+}
+
+h4 {
+  font-family: var(--Handjet);
+  font-size: 3rem;
+  color: var(--accent);
+}
+
+h5 {
+    font-family: var(--Mozilla);
+    font-size: 1rem;
+    color: #9f9fa9;
 }

@@ -71,9 +71,15 @@ Render chain: `index.html` (the only HTML file; Vite's build entry) loads `/src/
 `<App />` into `#root` inside `<StrictMode>`. StrictMode double-invokes render and effects in dev only —
 expect duplicated logs; that's a feature that exposes impure renders, not a bug to work around.
 
-`src/App.jsx` composes the page as a flat list of section components — currently `<Header />` and
-`<Home />`. **`react-router-dom` (v7) is installed but its import in `App.jsx` is commented out**, so it
-is presently an unused dependency — the owner was studying routing, not committing to it. A router is
+`src/App.jsx` composes the page as a flat list of section components: `<Header />`, then `<Home />`,
+`<About />`, `<Skills />` inside a `<main>`. There is no state, no props, and no hooks anywhere in the
+app yet — every component is a zero-argument function returning static JSX. The one exception is
+`Skills.jsx`, which holds a local `skills` array and `.map()`s it into pill `<div>`s with `key={index}`
+(acceptable only because the list is static and never reordered — say so if the owner ever makes it
+dynamic).
+
+**`react-router-dom` (v7) is installed but its import in `App.jsx` is commented out**, so it is
+presently an unused dependency — the owner was studying routing, not committing to it. A router is
 only warranted once the site has a second real URL; navigating between sections of one page is plain
 `<a href="#id">` plus `scroll-behavior: smooth`, with no library involved. Don't wire the router back
 up unsolicited.
@@ -84,7 +90,8 @@ the `.jsx` is PascalCase, the `.css` is lowercase. Follow it for new components.
 
 Two asset paths, and they behave differently:
 - `src/assets/*` — `import` it, Vite hashes and inlines/bundles it, broken references fail the build.
-  Currently the three header icons (`github-logo.png`, `li-logo.png`, `download-icon.png`).
+  Currently three header icons (`github-logo.png`, `li-logo.png`, `download-icon.png`) and `code.jpg`
+  for the About section.
 - `public/*` — referenced by absolute URL, copied verbatim, **never checked**. A typo here fails
   silently at runtime. `public/resume.pdf` is load-bearing: `Header.jsx` links to it with
   `<a href="/resume.pdf" download>`. `favicon.svg` and `icons.svg` are scaffold leftovers.
@@ -104,34 +111,39 @@ three places that must stay in sync:
 - `index.css` — `html { scroll-padding-top: var(--header-size) }` stops the header from covering a
   section heading when an `#id` anchor jumps to it
 
-Change the header's height only through that token.
+Change the header's height only through that token. This is now live rather than theoretical: the logo
+points at `#home` and the About/Skills nav items are real anchors into sections that render matching
+`id`s, so a broken offset shows up immediately in the browser.
 
 **The recurring bug in this repo:** copying `position: fixed; inset-inline: 0` out of `header.css` into
 a content component. The header *should* be fixed; content should not. A fixed element is out of
 normal flow and contributes zero height to the document, which makes the page unscrollable and the
-section invisible to everything below it. It was in `.home`; `src/Home/home.css` now has both
-`position: fixed` and `padding-inline` commented out, and the leftover `inset-inline: 0` is inert on a
-static element (insets only apply to positioned boxes) — harmless, but it is not doing what it looks
-like it is doing. Check for a stray `position: fixed` before debugging any "my layout is wrong / the
-page won't scroll" question.
+section invisible to everything below it. It was in `.home`; `src/Home/home.css` still carries both
+`position: fixed` and `padding-inline` commented out on `.home-inner`, plus a leftover
+`inset-inline: 0` that is inert on a static element (insets only apply to positioned boxes) —
+harmless, but it is not doing what it looks like it is doing. Check for a stray `position: fixed`
+before debugging any "my layout is wrong / the page won't scroll" question.
 
-### The page container is duplicated, not shared
+### The page container: half-shared, and the halves disagree
 
-The second cross-file mechanism, and it is currently out of sync. Both `.site-header` and `.home`
-declare their own `max-width: 1200px; margin-inline: auto`, but only the header keeps
-`padding-inline: 2rem` — `.home`'s is commented out. So the home text starts 2rem to the left of the
-logo above it; the two columns do not share an edge. The standard fix is one container rule (a
-`.container` class or a shared token like `--page-max: 1200px` / `--page-pad: 2rem`) that every
-section reuses, rather than each component restating the numbers. Worth raising when the owner adds a
-third section and copies the pair of declarations a third time.
+`index.css` now defines a shared `.section-div` (`max-width: 1200px; margin-inline: auto;`
+`font-family: var(--Mozilla); padding-bottom: 4rem`) plus `.section-titles` for the oversized Handjet
+section headings. About and Skills use both. Three things are still out of sync, and they are the
+likely cause of any "why don't these line up" question:
 
-### Anchor navigation is not wired up yet
+- `.section-div` has **no** `padding-inline`, but `.site-header` has `padding-inline: 2rem`, so section
+  content sits 2rem to the left of the logo above it.
+- `Home` doesn't use `.section-div` at all — `.home-inner` restates `max-width: 1200px;
+  margin-inline: auto` by hand, with its own `padding-inline` commented out.
+- `.skills-div` sets `max-width: 100%`, which **overrides** `.section-div`'s `1200px`. Both are
+  single-class selectors, so specificity ties and source order decides the winner: `main.jsx` imports
+  `index.css` first and component CSS lands after it, so `skills.css` wins. That is what makes the
+  Skills panel span wider than every other section — deliberate or not, it is balanced on stylesheet
+  order, which is fragile.
 
-`html { scroll-padding-top }` and `scroll-behavior: smooth` are in place, but nothing uses them: the
-four nav items in `Header.jsx` are bare `<li>` text with no `<a href="#id">`, and no section renders
-an `id`. The logo is `<a href="/">`, a full page reload rather than a scroll to top (there is a TODO
-on it). Expect the offset system to be untested in practice — verify it the first time a real anchor
-is added.
+The standard fix is one container rule (a `.container` class, or shared `--page-max` / `--page-pad`
+tokens) that the header and every section reuse. Worth raising the next time a section restates the
+same pair of declarations.
 
 ### Styling
 
@@ -139,8 +151,9 @@ Plain CSS — no preprocessor, no CSS-in-JS, no utility framework. Two layers:
 
 - `src/index.css` — the global layer: a `*, *::before, *::after { box-sizing: border-box }` reset,
   design tokens as CSS custom properties on `:root` (sizing: `--header-size`, `--title-size`,
-  `--sub-title-size`, `--home-name-size`; fonts: `--Handjet`, `--Mozilla`; color: `--bg`, `--text`,
-  `--border`, `--accent`), and base `html`/`body` rules.
+  `--sub-title-size`; fonts: `--Handjet`, `--Mozilla`; color: `--bg`, `--text`, `--border`,
+  `--accent: #73000A`), the shared `.section-div` / `.section-titles` classes, and base `html`/`body`
+  rules.
 - Per-component CSS colocated in the component's folder, imported by that component.
 
 **A colocated CSS import is organization, not isolation.** CSS imports are global no matter where they
@@ -148,25 +161,35 @@ appear; Vite concatenates them into one stylesheet, so class names share a singl
 Prefix class names by component (`.header-nav`, `.home-name`) to avoid collisions. CSS Modules
 (`*.module.css`) is the escape hatch, but only once the owner has actually felt the collision problem.
 
+Type sizes are hard-coded per rule rather than tokenized — `15rem` on `.home-name`, `10rem` on
+`.section-titles`, `4.5rem` on `.adjectives`, `2rem` on `.blurb`. There is no type scale yet; that is
+the natural next design conversation, not something to refactor unasked.
+
 Dark mode: the `@media (prefers-color-scheme: dark)` block in `index.css` exists but is **entirely
-commented out**, with a TODO noting the PNG icons need dark variants. Two things already work against
-turning it back on — `--accent:` is declared empty (an invalid value), and `home.css` hard-codes
-`#73000A` for `.last-name`. If the owner wants dark mode back, the fix is to make every color a token
-first; a new color belongs in the token block, not inline in a rule.
+commented out**, with a TODO noting the PNG icons need dark variants. `--accent` now holds a real value
+and `.last-name` reads it through `var()`, so the remaining blockers are those icons plus two
+hard-coded colors in `skills.css` (`#FAFAFA` background, `black` pill border). A new color belongs in
+the token block, not inline in a rule.
 
-The `#73000A` dark red is currently the site's only accent color and it's the natural candidate for
-`--accent`.
+`#73000A` is the site's only accent color.
 
-## Known dead code
+## Known dead code and rough edges
 
 - `src/App.css` — pure scaffold. Styles `#center`, `#next-steps`, `#docs`, `#spacer`, `.hero`,
   `.ticks`, `.counter`, none of which render any more. Its import in `App.jsx` is commented out. This
   is also the only file using native CSS nesting and the `@media (max-width: 1024px)` breakpoint, so
   don't cite it as evidence of the project's conventions — the owner's own CSS has no media queries
-  yet, meaning **the site is currently not responsive at all**. Safe to delete.
+  yet, meaning **the site is currently not responsive at all**.
+- Fixed pixel sizes work against responsiveness independently of the missing breakpoints:
+  `.about-text { width: 500px }`, `.code-img { height: 300px }`, and `.home-inner
+  { padding-bottom: 40rem }` (a placeholder spacer holding the page open).
+- `Header.jsx` — `Experience`, `Portfolio`, and `Contact` are still bare `<li>` text with no anchor and
+  no matching section; only About and Skills navigate.
+- `About.jsx` — its `<img>` has no `alt` attribute; the three header icons all do.
 - `README.md` — still the scaffold default, titled "React + TypeScript + Vite" for a project with no
   TypeScript. Worth replacing once the site takes shape.
-- `public/favicon.svg`, `public/icons.svg` — scaffold artwork.
+- `public/favicon.svg`, `public/icons.svg` — scaffold artwork, and `index.html`'s `<title>` is still
+  `personal-website`.
 
 ## Roadmap
 
@@ -175,8 +198,8 @@ four-step plan (collect references → clear the scaffold → real content unsty
 at a time) is their roadmap and the best statement of intent available. Note the first line of that
 comment recommends `npx tsc -b --watch`, which no longer applies now that TypeScript is gone.
 
-Work happens on topic branches (`header`, `about-section`) merged toward `main`; `origin` has `main`,
-`header`, and `about-section`. The current branch name is usually the best signal of what section is being built.
+Work happens on topic branches (`header`, `about-section`, `skills`) merged toward `main`; all four
+exist on `origin`. The current branch name is usually the best signal of what section is being built.
 
 ## Lint
 

@@ -1,5 +1,6 @@
-.skills-div{
-  background-color: #FAFAFA; /*placeholder color*/
+.skills-div {
+  background-color: #FAFAFA;
+  /*placeholder color*/
   padding-left: 4rem;
   padding-right: 4rem;
   border-radius: 12px;
@@ -13,9 +14,17 @@
   gap: 1rem;
   /* background-color: #FAFAFA; */
 }
+
 .skill-pill {
   border: black solid 1px;
   border-radius: 12px;
   padding: 1rem;
+  transition: all 0.3s ease;
+  cursor: default;
+}
 
+.skill-pill:hover {
+  border-color: var(--text);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }

@@ -3,7 +3,6 @@ import githubLogo from '../assets/github-logo.png'
 import liLogo from '../assets/li-logo.png'
 import downloadIcon from '../assets/download-icon.png'
 
-// TODO: logo needs to send to top
 const Header = () => {
     return (
         <header>

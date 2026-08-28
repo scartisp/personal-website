@@ -12,28 +12,38 @@ const Experience = () => {
 
         }
     ];
+    const education = {
+        university: 'University of South Carolina',
+        expectedGrad: 'May 2027',
+        location: 'Columbia, SC',
+        degree: 'Bachelor of Science in Computer Science',
+        concentration: 'Artificial Intelligence',
+        GPA: '4.0/4.0',
+        CourseWork: 'Data Structures & Algorithms, Operating Systems, Software Engineering, Artificial Intelligence, Machine Learning Systems'
+    };
     return (
+        
         <div id='experience' className='section-div'>
             <h2 className='section-titles'>Experience</h2>
             <h3 className='section-subtitles'>Work Experience</h3>
-            <div className='work-experience-div'>
+            <div className='experience-div'>
                 {workExperience.map((job, index) => (
                     <div key={index} className='experience-card'>
                         <div className='meta-div'>
-                        <div className='meta-block'> 
-                            <h5 className='meta-label'>Duration</h5>
-                            <span className='meta-text'>{job.duration}</span>
+                            <div className='meta-block'>
+                                <h5 className='meta-label'>Duration</h5>
+                                <span className='meta-text'>{job.duration}</span>
+                            </div>
+                            <div className='meta-block'>
+                                <h5 className='meta-label'>Location</h5>
+                                <span className='meta-text'>{job.location}</span>
+                            </div>
                         </div>
-                        <div className='meta-block'> 
-                            <h5 className='meta-label'>Location</h5>
-                            <span className='meta-text'>{job.location}</span>
-                        </div>
-                        </div>
-                        <div className='details-div'> 
+                        <div className='details-div'>
                             <h4 className='experience-title'>{job.title}</h4>
                             <h5 className='experience-company'>{job.company}</h5>
                             <ul className='work-description'>
-                                {job.work.map((bullet,index) => (
+                                {job.work.map((bullet, index) => (
                                     <li key={index}>{bullet}</li>
                                 ))}
                             </ul>
@@ -41,8 +51,33 @@ const Experience = () => {
                     </div>
                 ))}
             </div>
+
+            <h3 className='section-subtitles'>Education</h3>
+            <div className='experience-div'>
+                <div className='experience-card'>
+                    <div className='meta-div'>
+                        <div className='meta-block'>
+                            <h5 className='meta-label'>Expected Graduation</h5>
+                            <span className='meta-text'>{education.expectedGrad}</span>
+                        </div>
+                        <div className='meta-block'>
+                            <h5 className='meta-label'>Location</h5>
+                            <span className='meta-text'>{education.location}</span>
+                        </div>
+                    </div>
+                    <div className='details-div'>
+                        <h4 className='experience-title'>{education.university}</h4>
+                        <h5 className='experience-company'>{education.degree}</h5>
+                        {/*TODO: these names for the h5 and h4 elements no longer make any sense*/}
+                        <ul className='work-description education-description'>
+                            <li> <span className='detail-label'>CONCENTRATION:</span> {education.concentration}</li>
+                            <li> <span className='detail-label'>RELEVANT COURSEWORK:</span> {education.CourseWork}</li>
+                            <li><span className='detail-label'>GPA:</span> {education.GPA}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
-
 export default Experience;

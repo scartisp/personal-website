@@ -1,4 +1,4 @@
-.work-experience-div {
+.experience-div {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -44,4 +44,8 @@
 
 .work-description {
   font-family: var(--Mozilla);
+}
+
+.detail-label {
+  font-weight: 600;
 }

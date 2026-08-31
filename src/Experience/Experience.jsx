@@ -3,7 +3,7 @@ import './experience.css'
 const Experience = () => {
     const workExperience = [
         {
-            title: 'Android Development Intern',
+            title: 'Software Engineer Intern',
             company: 'Textron, E-Z-GO',
             duration: 'June 2026-August 2026',
             location: 'Augusta, GA',
@@ -41,7 +41,7 @@ const Experience = () => {
                         </div>
                         <div className='details-div'>
                             <h4 className='experience-title'>{job.title}</h4>
-                            <h5 className='experience-company'>{job.company}</h5>
+                            <h5 className='experience-subtitle'>{job.company}</h5>
                             <ul className='work-description'>
                                 {job.work.map((bullet, index) => (
                                     <li key={index}>{bullet}</li>
@@ -67,7 +67,7 @@ const Experience = () => {
                     </div>
                     <div className='details-div'>
                         <h4 className='experience-title'>{education.university}</h4>
-                        <h5 className='experience-company'>{education.degree}</h5>
+                        <h5 className='experience-subtitle'>{education.degree}</h5>
                         {/*TODO: these names for the h5 and h4 elements no longer make any sense*/}
                         <ul className='work-description education-description'>
                             <li> <span className='detail-label'>CONCENTRATION:</span> {education.concentration}</li>

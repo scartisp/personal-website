@@ -22,7 +22,7 @@
 }
 
 .skill-pill:hover {
-  border-color: var(--text);
+  border-color: var(--accent);
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }

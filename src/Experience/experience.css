@@ -38,7 +38,7 @@
   margin: .25rem 0 ;
 }
 
-.experience-company {
+.experience-subtitle {
   margin: .75rem 0 .25rem ;
 }
 
@@ -48,4 +48,10 @@
 
 .detail-label {
   font-weight: 600;
+}
+
+.experience-card:hover {
+    border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }

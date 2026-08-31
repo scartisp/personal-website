@@ -12,7 +12,7 @@ const Navigation = () => {
                     <li> <a href='#about' className='a-link'>About</a></li>
                     <li> <a href='#skills' className='a-link'> Skills </a></li>
                     <li> <a href='#experience' className='a-link'>Experience</a></li>
-                    <li>Projects</li>
+                    <li> <a href='#projects' className='a-link'>Projects</a></li>
                     <li>Contact</li>
                 </ul>
                 <ul className='nav-list-element header-link-icons'>

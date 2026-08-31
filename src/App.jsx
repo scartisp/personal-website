@@ -1,7 +1,7 @@
 // Written by: Simion Cartis
 
 // import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Header from './Header/Header'
+import Navigation from './Navigation/Navigation'
 import Home from './Home/Home'
 import About from './About/About'
 import Skills from './Skills/Skills'
@@ -11,7 +11,7 @@ import Experience from './Experience/Experience'
 function App() {
   return (
     <>
-      <Header />
+      <Navigation />
       <main>
         <Home />
         <About />

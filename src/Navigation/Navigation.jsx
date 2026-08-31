@@ -1,21 +1,21 @@
-import './header.css'
+import './navigation.css'
 import githubLogo from '../assets/github-logo.png'
 import liLogo from '../assets/li-logo.png'
 import downloadIcon from '../assets/download-icon.png'
 
-const Header = () => {
+const Navigation = () => {
     return (
         <header>
             <nav className='site-header'>
                 <a href='#home' className="logo a-link">Simion Cartis</a>
-                <ul className='header-list-element header-nav'>
+                <ul className='nav-list-element header-nav'>
                     <li> <a href='#about' className='a-link'>About</a></li>
                     <li> <a href='#skills' className='a-link'> Skills </a></li>
                     <li> <a href='#experience' className='a-link'>Experience</a></li>
-                    <li>Portfolio</li>
+                    <li>Projects</li>
                     <li>Contact</li>
                 </ul>
-                <ul className='header-list-element header-link-icons'>
+                <ul className='nav-list-element header-link-icons'>
                     <li>
                         <a href='https://github.com/scartisp' target="_blank" rel="noreferrer">
                             <img src={githubLogo} className='link-icons' alt='GitHub'></img>
@@ -37,4 +37,4 @@ const Header = () => {
     );
 }
 
-export default Header;
+export default Navigation;

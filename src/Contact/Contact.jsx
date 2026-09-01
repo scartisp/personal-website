@@ -44,7 +44,7 @@ const Contact = () => {
                 <form className='send-email' onSubmit={onSubmit}>
 
                     <label htmlFor='name'>Name</label>
-                    <input id='name' type="text" name="name" placeholder='Your Name' required />
+                    <input id='name' type="text" name="name" placeholder='Your Name' required/>
 
                     <label htmlFor='email'>Email</label>
                     <input id='email' type="email" name="email" placeholder='Your Email' required />

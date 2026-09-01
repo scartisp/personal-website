@@ -21,7 +21,7 @@ const Projects = () => {
             description: 'Replicate of the Amazon webpage. You are able to search for items, add them to a cart, decide delivery date, and order them',
             image: amazon,
             sourceCode: 'https://github.com/scartisp/javascript-amazon-project',
-            demo: 'https://github.com/scartisp/javascript-amazon-project'
+            demo: 'https://scartisp.github.io/javascript-amazon-project/amazon.html'
         },
         {
             title: 'Voter Turnout Visualization',
@@ -40,7 +40,7 @@ const Projects = () => {
                 {projects.map((project, index) => (
                     <div key={index} className='project-card'>
                         <a href={project.demo} target="_blank" rel="noreferrer"><img src={project.image} className='image-demo-link'></img></a>
-                        <div className='project-info'> 
+                        <div className='project-info'>
                             <h5 className='project-tools'>{project.tools}</h5>
                             <h4 className='project-title'>{project.title}</h4>
                             <p className='project-description'>{project.description}</p>

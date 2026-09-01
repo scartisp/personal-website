@@ -6,9 +6,68 @@
 #contact-div {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+#get-in-touch {
+  max-width: 600px;
+}
+
+#lets-talk {
+  font-family: var(--Handjet);
+  font-size: 7.5rem;
+  color: var(--accent);
+  margin: 0;
+}
+
+#lets-talk-p {
+  font-size: 1.75rem;
+  font-weight: 600;
 }
 
 .send-email {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  max-width: 600px;
+}
+
+.send-email label {
+  font-size: 1.75rem;
+}
+
+#name,
+#email {
+  height: 40px;
+}
+
+#name,
+#email,
+#message {
+  margin-bottom: .5rem;
+  font-family: var(--Mozilla);
+  font-size: 1.25rem;
+  border: 2px solid black;
+}
+
+#message {
+  height: 200px;
+}
+
+#send-button {
+  background-color: white;
+  padding: .25rem;
+  font-family: var(--Mozilla);
+  font-size: 2rem;
+  transition: all 0.3s ease;
+}
+
+#send-button:hover {
+  cursor: pointer;
+  background-color: black;
+  color: var(--accent);
+  font-weight: 600;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }

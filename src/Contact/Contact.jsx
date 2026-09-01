@@ -38,21 +38,21 @@ const Contact = () => {
             <h2 className='section-titles'>Contact</h2>
             <div id='contact-div'>
                 <div id='get-in-touch'>
-                    <h2>Let's Talk!</h2>
-                    <p>Have a question? Want to work together? Send a message!</p>
+                    <h2 id='lets-talk'>Let's Talk!</h2>
+                    <p id='lets-talk-p'>Have a question? Want to work together? Send an email!</p>
                 </div>
                 <form className='send-email' onSubmit={onSubmit}>
 
                     <label htmlFor='name'>Name</label>
-                    <input id='name' type="text" name="name" required />
+                    <input id='name' type="text" name="name" placeholder='Your Name' required />
 
                     <label htmlFor='email'>Email</label>
-                    <input id='email' type="email" name="email" required />
+                    <input id='email' type="email" name="email" placeholder='Your Email' required />
 
                     <label htmlFor='message'>Message</label>
-                    <textarea id='message' name="message" required></textarea>
+                    <textarea id='message' name="message" placeholder='Your Message' required></textarea>
 
-                    <button type="submit">Submit Form</button>
+                    <button id='send-button' type="submit">Send</button>
                     <span>{result}</span>
 
                     <input type='hidden' name='subject' value='New message from portfolio' />

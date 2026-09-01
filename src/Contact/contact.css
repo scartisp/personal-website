@@ -1,0 +1,14 @@
+#contact {
+  display: flex;
+  flex-direction: column;
+}
+
+#contact-div {
+  display: flex;
+  flex-direction: row;
+}
+
+.send-email {
+  display: flex;
+  flex-direction: column;
+}

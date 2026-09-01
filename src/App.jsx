@@ -7,6 +7,7 @@ import About from './About/About'
 import Skills from './Skills/Skills'
 import Experience from './Experience/Experience'
 import Projects from './Projects/Projects'
+import Contact from './Contact/Contact'
 // import './App.css'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Skills />
         <Experience />
         <Projects />
+        <Contact />
       </main>
     </>
 

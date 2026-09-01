@@ -27,7 +27,7 @@ const Navigation = () => {
                         </a>
                     </li>
                     <li>
-                        <a href='/resume.pdf' download='Simion-Cartis-Resume.pdf'>
+                        <a href='/resume.pdf' download='Simion_Cartis_Resume.pdf'>
                             <img src={downloadIcon} className='link-icons' alt='Download Resume'></img>
                         </a>
                     </li>

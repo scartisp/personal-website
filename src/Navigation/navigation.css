@@ -1,5 +1,6 @@
 .site-header {
   position: fixed;
+  z-index: 10;
   top: 0;
   inset-inline: 0;
   max-width: 1200px;
@@ -44,7 +45,6 @@
 }
 
 .link-icons {
-  height: 32px;
   width: auto;
   display: block;
 }

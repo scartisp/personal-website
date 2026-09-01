@@ -57,6 +57,7 @@
 
 #send-button {
   background-color: white;
+  border: 2px solid black;
   padding: .25rem;
   font-family: var(--Mozilla);
   font-size: 2rem;

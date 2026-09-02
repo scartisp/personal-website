@@ -17,6 +17,7 @@
 #lets-talk {
   font-family: var(--Handjet);
   font-size: 7.5rem;
+  font-weight: 600;
   color: var(--accent);
   margin: 0;
 }

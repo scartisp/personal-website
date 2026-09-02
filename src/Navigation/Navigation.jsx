@@ -27,7 +27,7 @@ const Navigation = () => {
                         </a>
                     </li>
                     <li>
-                        <a href='/resume.pdf' download='Simion_Cartis_Resume.pdf'>
+                        <a href='/Simion_Cartis_Resume.pdf' download='Simion_Cartis_Resume.pdf'>
                             <div className='download-div'>
                                 <img src={downloadIcon} className='link-icons' alt='Download Resume'></img>
                                 <span className='popup-text'>resume</span>

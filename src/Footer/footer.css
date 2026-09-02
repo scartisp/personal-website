@@ -1,0 +1,14 @@
+#footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--alt-bg);
+  padding: 2rem 4rem;
+  max-width: 100%;
+}
+
+.logo {
+  font-family: var(--Handjet);
+  font-size: var(--title-size);
+  margin: 0;
+}

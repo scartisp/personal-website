@@ -8,6 +8,7 @@ import Skills from './Skills/Skills'
 import Experience from './Experience/Experience'
 import Projects from './Projects/Projects'
 import Contact from './Contact/Contact'
+import Footer from './Footer/Footer'
 //TODO test emails
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
         <Projects />
         <Contact />
       </main>
+      <footer>
+        <Footer />
+      </footer>
     </>
 
   );

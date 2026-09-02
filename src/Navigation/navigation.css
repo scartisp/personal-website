@@ -49,6 +49,27 @@
   display: block;
 }
 
+.download-div {
+  position: relative;
+  display: inline-block;
+}
+
+.popup-text {
+  visibility: hidden;
+  position: absolute;
+  bottom: -75%;
+  left: 50%; 
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.download-div:hover .popup-text {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px);
+}
+
 .a-link {
   transition: all .5s ease;
 }

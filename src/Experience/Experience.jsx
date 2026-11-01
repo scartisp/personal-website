@@ -10,6 +10,13 @@ const Experience = () => {
             work: ['Built Android logic and UI for a new golf-distance-adjustment feature, combining hole elevation data with live GPS altitude to calculate elevation-adjusted yardage for all TruPin-equipped courses.', 'Queried the site-wide course database via LINQ, retrieving per-hole pin altitude for TruPin-enabled courses and sending it to tablets on startup.', 'Built a UDP-based service that relays hourly Perry Weather API wind speed/direction data to tablets on request.', 'Wrote a client-side pathway polling the server every 5 minutes to render live beverage-cart locations on the tablet map view.'],
             tools: 'Java, Kotlin, C#/.NET, Azure DevOps'
 
+        },
+        {
+            title: 'Undergraduate Research',
+            company: 'University of South Carolina MLEG Laboratory',
+            duration: 'September 2026-present',
+            location: 'Columbia, SC',
+            work: ['Built a tool-calling harness with a provider-capability registry, giving an LLM agent access to 5 external APIs.', "Designed a sequential workflow engine passing shared state between tool calls, persisting every step's I/O and bounding cross-turn context to 5 requests", "Enforced API safeguards: 100-result caps, 10-page pagination limits, 10MB response rejection, and compute timeouts to stop runaway external calls."]
         }
     ];
     const education = {
